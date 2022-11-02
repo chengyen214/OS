@@ -44,7 +44,7 @@ static int proc_init(void)
     ////<在此加入程式碼>////
     /////////////////////
     //用變數記住載入模組時的jiffies
-    
+    init_jiffies=jiffies;
     
         // 創出/proc/seconds這個項目
         proc_create(PROC_NAME, 0, NULL, &proc_ops);
@@ -82,7 +82,7 @@ static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, 
         // 計算目前jiffies和模組初始jiffies的差，並除以HZ值
         // 將結果透過sprintf放到buffer中，使用%ld印出
         rv = sprintf(buffer,
-                     "Module has been running for %ld seconds\n",
+                     "Module has been running for %ld seconds\n",(jiffies-init_jiffies)/HZ
                      //////////////////////
                      ////<在此加入程式碼>////
                      /////////////////////
